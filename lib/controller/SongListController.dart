@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:localmusicapp/model/SongMapper.dart';
+import 'package:localmusicapp/controller/ChooseSongController.dart';
+import 'package:localmusicapp/model/SheetSongModel.dart';
+import 'package:localmusicapp/model/mapper/SheetSongMapper.dart';
+import 'package:localmusicapp/model/mapper/SongMapper.dart';
 import 'package:localmusicapp/model/SongModel.dart';
 import 'package:localmusicapp/util/SqfliteUtil.dart';
 import 'package:sqflite/sqflite.dart';
 
+/// 所有歌曲列表控制器
 class SongListController extends GetxController {
   List<SongModel> songList = [];
 
   Database? _database;
+
+  /// 歌单id
+  int? _sheetId;
+
+  set setSheetId(int sheetId) => _sheetId = sheetId;
 
   @override
   void onInit() {
@@ -23,7 +32,7 @@ class SongListController extends GetxController {
     Batch batch = _database!.batch();
     for (SongModel element in newSongList) {
       debugPrint(
-          "SongListController -> addSongList -> songList.length:${element.toString()}");
+          "SongListController -> addSongList -> model:${element.toString()}");
       batch.insert(SongMapper.tableName, element.toJson());
     }
     await batch.commit();
@@ -43,35 +52,53 @@ class SongListController extends GetxController {
       ],
     );
     List<SongModel> map = maps.map((e) => SongModel.fromJson(e)).toList();
-    debugPrint("fetchAllSong -> 查询到：${map.length}条");
+    Get.log("fetchAllSong -> 查询到：${map.length}条");
     songList.clear();
     songList.addAll(map);
     update();
   }
 
-  Future<void> fetchSongBySheet(int? sheetId) async {
-    String whereSql = "";
+  /// 从歌单中查询歌曲
+  Future<void> fetchSongBySheet() async {
     List<Object?>? whereArgs = [];
-    if (sheetId != null && sheetId > 0) {
-      whereSql += "${SongMapper.id}=?";
-      whereArgs.add(sheetId);
+    if (_sheetId != null) {
+      whereArgs.add(_sheetId);
     }
-    List<Map<String, dynamic>> maps = await _database!.query(
-      SongMapper.tableName,
-      columns: [
-        SongMapper.id,
-        SongMapper.songTitle,
-        SongMapper.singer,
-        SongMapper.songFileUrl,
-        SongMapper.album
-      ],
-      where: whereSql,
-      whereArgs: whereArgs,
-    );
+    String querySql = "select "
+        "tss.id tssid,"
+        "tss.sheetId,"
+        "tss.songId id,"
+        "ts.songTitle,"
+        "ts.songFileUrl,"
+        "ts.singer,"
+        "ts.album "
+        "from t_sheet_song tss "
+        "inner join t_song ts on tss.songId = ts.id "
+        "where tss.sheetId=? "
+        "order by tss.sequence asc";
+
+    List<Map<String, dynamic>> maps = await _database!.rawQuery(querySql,whereArgs);
+
     List<SongModel> map = maps.map((e) => SongModel.fromJson(e)).toList();
-    debugPrint("fetchSongBySheet -> 查询到：${map.length}条");
+    Get.log("fetchSongBySheet -> 查询到：${map.length}条");
     songList.clear();
     songList.addAll(map);
     update();
+  }
+
+  /// 建立歌曲 歌单关系
+  Future<void> songIntoSheet(List<ChooseSong> songList) async {
+    Batch batch = _database!.batch();
+    int seq = 1;
+    for (ChooseSong element in songList) {
+      Get.log(
+          "SongListController -> songIntoSheet -> model:${element.toString()}");
+      if(element.check){
+        SheetSongModel sheetSongModel =
+        SheetSongModel(null, _sheetId, element.songId, seq++);
+        batch.insert(SheetSongMapper.tableName, sheetSongModel.toJson());
+      }
+    }
+    await batch.commit();
   }
 }

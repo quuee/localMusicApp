@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:localmusicapp/model/SheetMapper.dart';
+import 'package:localmusicapp/model/mapper/SheetMapper.dart';
 import 'package:localmusicapp/model/SheetModel.dart';
 import 'package:localmusicapp/util/SqfliteUtil.dart';
 import 'package:sqflite/sqflite.dart';
 
+/// 歌单控制器
 class SheetController extends GetxController {
   Database? _database;
   List<SheetModel> sheetList = [];
 
   @override
   void onInit() {
-    debugPrint("onInit");
+    Get.log("onInit");
     // 从数据库中获取歌单信息
     _database = SqfliteUtil.db;
 
@@ -21,18 +22,18 @@ class SheetController extends GetxController {
 
   @override
   void onReady() {
-    debugPrint("onReady");
+    Get.log("onReady");
     super.onReady();
   }
 
   @override
   void onClose() {
-    debugPrint("onClose");
+    Get.log("onClose");
     super.onClose();
   }
 
   void addSheet(String sheetName) async {
-    SheetModel sheet = SheetModel(id:null,sheetName: sheetName,sequence: 1,imageUrl: "");
+    SheetModel sheet = SheetModel(null,sheetName,1, "");
     sheet.id = await _database!.insert(SheetMapper.tableName, sheet.toJson());
     sheetList.add(sheet);
     update();
@@ -51,7 +52,7 @@ class SheetController extends GetxController {
       // whereArgs: [sheetName],
     );
     List<SheetModel> map = maps.map((e) => SheetModel.fromJson(e)).toList();
-    debugPrint("fetchAllSheet -> 查询到：${map.length}条");
+    Get.log("fetchAllSheet -> 查询到：${map.length}条");
     sheetList.addAll(map);
     update();
   }

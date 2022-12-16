@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:localmusicapp/model/SheetMapper.dart';
-import 'package:localmusicapp/model/SheetSongMapper.dart';
-import 'package:localmusicapp/model/SongMapper.dart';
+import 'package:localmusicapp/model/mapper/SheetMapper.dart';
+import 'package:localmusicapp/model/mapper/SheetSongMapper.dart';
+import 'package:localmusicapp/model/mapper/SongMapper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqfliteUtil {

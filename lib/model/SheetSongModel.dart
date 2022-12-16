@@ -6,19 +6,18 @@ class SheetSongModel {
   int? songId;
   int? sequence;
 
-  SheetSongModel({
+  SheetSongModel(
     this.id,
     this.sheetId,
     this.songId,
     this.sequence,
-  });
-
-  factory SheetSongModel.fromJson(Map<String, dynamic> json) => SheetSongModel(
-    id: json["id"],
-    sheetId: json["sheetId"],
-    songId: json["songId"],
-    sequence: json["sequence"],
   );
+
+  SheetSongModel.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        sheetId = json["sheetId"],
+        songId = json["songId"],
+        sequence = json["sequence"];
 
   Map<String, dynamic> toJson() => {
     "id": id,

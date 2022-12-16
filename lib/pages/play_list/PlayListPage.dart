@@ -19,7 +19,10 @@ class _PlayListPageState extends State<PlayListPage> {
 
     final args = Get.arguments as Map;
     SongListController songListController = Get.find<SongListController>();
-    songListController.fetchSongBySheet(args["sheetId"]);
+    songListController.setSheetId = args["sheetId"];
+    songListController.fetchSongBySheet();
+
+    // TODO 歌单添加歌曲后 返回没有歌曲
 
     return Scaffold(
       appBar: AppBar(

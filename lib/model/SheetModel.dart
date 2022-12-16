@@ -7,19 +7,18 @@ class SheetModel {
   int? sequence;
   String? imageUrl;
 
-  SheetModel({
+  SheetModel(
     this.id,
     this.sheetName,
     this.sequence,
     this.imageUrl,
-  });
-
-  factory SheetModel.fromJson(Map<String, dynamic> json) => SheetModel(
-    id: json["id"],
-    sheetName: json["sheetName"],
-    sequence: json["sequence"],
-    imageUrl: json["imageUrl"],
   );
+
+  SheetModel.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        sheetName = json["sheetName"],
+        sequence = json["sequence"],
+        imageUrl = json["imageUrl"];
 
   Map<String, dynamic> toJson() => {
     "id": id,

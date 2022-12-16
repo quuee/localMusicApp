@@ -33,7 +33,7 @@ class _ScanPageState extends State<ScanPage> {
     for (var element in result) {
       // debugPrint("android返回的数据: $element");
       SongModel songModel = SongModel.fromJson(element);
-      debugPrint("转换后的数据：${songModel.toString()}");
+      Get.log("转换后的数据：${songModel.toString()}");
       songList.add(songModel);
     }
     songListController.addSongList(songList);
