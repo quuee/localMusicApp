@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:localmusicapp/config/ConstValues.dart';
 import 'package:localmusicapp/controller/ChooseSongController.dart';
 import 'package:localmusicapp/model/SheetSongModel.dart';
 import 'package:localmusicapp/model/mapper/SheetSongMapper.dart';
@@ -37,7 +38,7 @@ class SongListController extends GetxController {
     }
     await batch.commit();
     songList.addAll(newSongList);
-    update();
+
   }
 
   Future<void> fetchAllSong() async {
@@ -55,7 +56,7 @@ class SongListController extends GetxController {
     Get.log("fetchAllSong -> 查询到：${map.length}条");
     songList.clear();
     songList.addAll(map);
-    update();
+    update([ConstValues.AllSongPageId]);
   }
 
   /// 从歌单中查询歌曲
@@ -77,13 +78,14 @@ class SongListController extends GetxController {
         "where tss.sheetId=? "
         "order by tss.sequence asc";
 
-    List<Map<String, dynamic>> maps = await _database!.rawQuery(querySql,whereArgs);
+    List<Map<String, dynamic>> maps =
+        await _database!.rawQuery(querySql, whereArgs);
 
     List<SongModel> map = maps.map((e) => SongModel.fromJson(e)).toList();
     Get.log("fetchSongBySheet -> 查询到：${map.length}条");
     songList.clear();
     songList.addAll(map);
-    update();
+    update([ConstValues.PlayListPageId]);
   }
 
   /// 建立歌曲 歌单关系
@@ -93,12 +95,20 @@ class SongListController extends GetxController {
     for (ChooseSong element in songList) {
       Get.log(
           "SongListController -> songIntoSheet -> model:${element.toString()}");
-      if(element.check){
+      if (element.check) {
         SheetSongModel sheetSongModel =
-        SheetSongModel(null, _sheetId, element.songId, seq++);
+            SheetSongModel(null, _sheetId, element.songId, seq++);
         batch.insert(SheetSongMapper.tableName, sheetSongModel.toJson());
       }
     }
     await batch.commit();
+  }
+
+  /// 从歌单中删除歌曲（从数据库歌单歌曲关系表中删除，不会将本地歌曲文件删除）
+  Future<void> deleteSongFromSheet(int songId) async {
+    await _database!.delete(SheetSongMapper.tableName,
+        where: "${SheetSongMapper.songId} = ?",
+        whereArgs: [songId]);
+    // update([ConstValues.PlayListPageId]);
   }
 }

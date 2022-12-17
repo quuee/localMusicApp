@@ -5,6 +5,8 @@ class ConstValues {
   static const ProgressBarDurationId = "progressBarDurationId";
   static const ProgressBarPositionId = "progressBarPositionId";
   static const PlayModeId = "playModeId";
+  static const PlayListPageId = "playListPageId";
+  static const AllSongPageId = "allSongPageId";
 
   static const PageName_AllPage = "全部歌曲";
   static const PageName_Sheet = "歌单";

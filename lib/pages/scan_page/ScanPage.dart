@@ -56,7 +56,7 @@ class _ScanPageState extends State<ScanPage> {
       appBar: AppBar(
         title: const Text(ConstValues.PageName_Scan),
       ),
-      drawer: DrawerMenu(),
+      drawer: const DrawerMenu(),
       body: Column(
         children: [
           ElevatedButton(

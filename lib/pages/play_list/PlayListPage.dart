@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:localmusicapp/components/BottomPlayBar.dart';
-import 'package:localmusicapp/components/SingleSong.dart';
+import 'package:localmusicapp/components/SheetSingleSong.dart';
 import 'package:localmusicapp/config/ConstValues.dart';
 import 'package:localmusicapp/controller/SongListController.dart';
 import 'package:localmusicapp/pages/play_list/PlayListPopupMenu.dart';
@@ -34,7 +34,9 @@ class _PlayListPageState extends State<PlayListPage> {
       ),
       body: Column(
         children: [
-          GetBuilder<SongListController>(builder: (_) {
+          GetBuilder<SongListController>(
+              id: ConstValues.PlayListPageId,
+              builder: (_) {
             return Expanded(
                 child: ListView.builder(
                     itemCount: _.songList.length,
@@ -42,7 +44,7 @@ class _PlayListPageState extends State<PlayListPage> {
                       String songTitle =
                           _.songList.elementAt(index).songTitle ?? ConstValues.unkown;
                       int songId = _.songList.elementAt(index).id ?? 0;
-                      return SingleSong(songTitle, songId);
+                      return SheetSingleSong(songTitle, songId);
                     }));
           }),
           BottomPlayBar()

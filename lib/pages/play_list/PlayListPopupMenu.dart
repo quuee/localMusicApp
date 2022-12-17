@@ -11,12 +11,12 @@ playListPopupMenu(BuildContext context) {
           value: "add",
         ),
         PopupMenuItem(
-          child: Text("编辑歌单"),
-          value: "edit",
-        ),
-        PopupMenuItem(
           child: Text("排序"),
           value: "sequence",
+        ),
+        PopupMenuItem(
+          child: Text("编辑歌单"),
+          value: "edit",
         ),
         PopupMenuItem(
           child: Text("删除歌单"),

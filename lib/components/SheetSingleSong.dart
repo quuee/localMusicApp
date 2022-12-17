@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:localmusicapp/controller/PlayController.dart';
 import 'package:localmusicapp/controller/SongListController.dart';
 
-class SingleSong extends StatelessWidget {
+class SheetSingleSong extends StatelessWidget {
 
-  const SingleSong(this.songName,this.songId,{Key? key}) : super(key: key);
+  const SheetSingleSong(this.songName,this.songId,{Key? key}) : super(key: key);
 
   final String songName;
   final int songId;
@@ -37,11 +37,18 @@ class SingleSong extends StatelessWidget {
         playController.changePlayList(songListController.songList);
         playController.play(songId);
       },
-      // onHorizontalDragEnd: (DragEndDetails endDetails){
-      //   Get.log("向左滑动了");
-      //
-      // },
-      child: _item(),
+
+      child: Dismissible(
+        key: Key(songId.toString()),
+        background: Container(color: Colors.red,),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction){
+          // Get.log("onDismissed -> $direction");
+          SongListController songListController = Get.find<SongListController>();
+          songListController.deleteSongFromSheet(songId);
+        },
+        child: _item(),
+      ),
     );
 
   }

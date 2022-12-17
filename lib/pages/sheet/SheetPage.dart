@@ -77,11 +77,12 @@ class _SheetPageState extends State<SheetPage> {
         title: const Text(ConstValues.PageName_Sheet),
         // actions: [IconButton(onPressed: , icon: Icon(Icons.add))],
       ),
-      drawer: DrawerMenu(),
+      drawer: const DrawerMenu(),
       body: Column(
         children: [
           ElevatedButton(
               onPressed: () {
+                // 在父组件加载完毕后再加载子组件
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   _createNewSheet(context);
                 });

@@ -69,7 +69,7 @@ class PlayController extends GetxController {
     super.onInit();
   }
 
-  void play(int songId) {
+  Future<void> play(int songId) async {
     currentSongIndex = 0;
     Get.log("PlayController -> play songId:$songId");
     for (var element in playList) {
@@ -83,7 +83,8 @@ class PlayController extends GetxController {
     SongModel song = playList[currentSongIndex];
     bool blank = GetUtils.isBlank(song.songFileUrl)!;
     if (!blank) {
-      _player.play(DeviceFileSource(song.songFileUrl!));
+      await _player.play(DeviceFileSource(song.songFileUrl!),mode: PlayerMode.mediaPlayer);
+
       update([ConstValues.SongTitleId]);
     }
   }
@@ -107,7 +108,7 @@ class PlayController extends GetxController {
     SongModel song = playList[currentSongIndex];
     bool blank = GetUtils.isBlank(song.songFileUrl)!;
     if (!blank) {
-      _player.play(DeviceFileSource(song.songFileUrl!));
+      _player.play(DeviceFileSource(song.songFileUrl!),mode: PlayerMode.mediaPlayer);
       update([ConstValues.SongTitleId]);
     }
   }
@@ -122,7 +123,7 @@ class PlayController extends GetxController {
     SongModel song = playList[currentSongIndex];
     bool blank = GetUtils.isBlank(song.songFileUrl)!;
     if (!blank) {
-      _player.play(DeviceFileSource(song.songFileUrl!));
+      _player.play(DeviceFileSource(song.songFileUrl!),mode: PlayerMode.mediaPlayer);
       update([ConstValues.SongTitleId]);
     }
   }
