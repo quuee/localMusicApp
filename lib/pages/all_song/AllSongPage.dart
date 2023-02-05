@@ -21,9 +21,9 @@ class _AllSongPageState extends State<AllSongPage> {
     songListController.fetchAllSong();
 
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      NotificationService().showNotifications();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   NotificationService().showNotifications();
+    // });
 
     return Scaffold(
       appBar: AppBar(

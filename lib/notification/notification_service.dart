@@ -18,8 +18,7 @@ class NotificationService {
 
   init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings(
-            "@drawable/app_music");
+        AndroidInitializationSettings("@drawable/app_music");
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
@@ -46,16 +45,53 @@ class NotificationService {
   }
 
   Future<void> showNotifications() async {
+    // AndroidNotificationDetails androidNotificationDetails =
+    //     const AndroidNotificationDetails(
+    //   'your channel id',
+    //   'your channel name',
+    //   channelDescription: 'your channel description',
+    //   importance: Importance.max,
+    //   priority: Priority.high,
+    //   playSound: false,
+    //   ticker: 'ticker',
+    //   actions: <AndroidNotificationAction>[
+    //     AndroidNotificationAction(
+    //       "id_1",
+    //       'Action 1',
+    //       icon: DrawableResourceAndroidBitmap('app_music'),
+    //       contextual: true,
+    //     ),
+    //     AndroidNotificationAction(
+    //       'id_2',
+    //       'Action 2',
+    //       titleColor: Color.fromARGB(255, 255, 0, 0),
+    //       icon: DrawableResourceAndroidBitmap('app_music'),
+    //     ),
+    //     AndroidNotificationAction(
+    //       "id_3",
+    //       'Action 3',
+    //       icon: DrawableResourceAndroidBitmap('app_music'),
+    //       showsUserInterface: true,
+    //       // By default, Android plugin will dismiss the notification when the
+    //       // user tapped on a action (this mimics the behavior on iOS).
+    //       cancelNotification: false,
+    //     ),
+    //   ],
+    // );
 
-    AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
 
-    NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
+
+    final AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+      'media channel id',
+      'media channel name',
+      channelDescription: 'media channel description',
+      largeIcon: FilePathAndroidBitmap("music_app"),
+      styleInformation: const MediaStyleInformation(),
+    );
+    final NotificationDetails notificationDetails =
+    NotificationDetails(android: androidNotificationDetails);
+
 
     // int id, 通知的唯一标识符
     // String? title, 通知的标题
@@ -63,10 +99,11 @@ class NotificationService {
     // NotificationDetails? notificationDetails, 传递给notificationDetails 对象的地方
     // String? payload, 持有当通知被点选时通过通知传递的数据
     await flutterLocalNotificationsPlugin.show(
-        0,
-        'plain title',
-        'plain body',
-        notificationDetails,
-        payload: 'item x');
+        0, '通知的标题', '通知信息', notificationDetails,
+        payload: '点击后被回传的数据');
+
+
   }
+
+
 }

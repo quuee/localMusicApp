@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 封面 -->
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@android:mipmap/sym_def_app_icon" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="6dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <!-- 歌曲信息 -->
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="歌曲名"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginStart="12sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_height="wrap_content"
+                android:text="歌手名"
+                android:textSize="12sp" />
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+        </LinearLayout>
+
+        <!-- 歌曲控制 -->
+        <LinearLayout
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <!--上一曲-->
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_media_previous" />
+            <!--播放/暂停-->
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_media_play" />
+            <!--下一曲-->
+            <ImageButton
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_media_next" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>
